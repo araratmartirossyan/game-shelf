@@ -19,22 +19,22 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-} from "@ionic/vue";
-import GsInput from "@/components/Input";
-import { defineComponent } from "vue";
+} from '@ionic/vue'
+import GsInput from '@/components/Input.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: "CreateGameModal",
+  name: 'CreateGameModal',
   props: {
-    title: { type: String, default: "Add Game" },
+    title: { type: String, default: 'Add Game' },
   },
   data: () => ({
     gameForm: {
-      title: "",
+      title: '',
     },
   }),
   components: { IonContent, GsInput, IonPage, IonHeader, IonToolbar, IonTitle },
-});
+})
 </script>
 
 <style lang="scss">

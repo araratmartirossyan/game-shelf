@@ -29,89 +29,89 @@
 </template>
 
 <script lang="ts">
-import { addCircle } from "ionicons/icons";
-import { addIcons } from "ionicons";
+import { addCircle } from 'ionicons/icons'
+import { addIcons } from 'ionicons'
 
 addIcons({
-  "ios-add": addCircle,
-});
+  'ios-add': addCircle,
+})
 const games = [
   {
-    title: "Last of Us 2",
-    bgImage: "https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg",
-    platform: "PS4",
+    title: 'Last of Us 2',
+    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Red Dead Redemption 2",
-    bgImage: "https://media.s-bol.com/7366kVl26WXr/550x685.jpg",
-    platform: "PS4",
+    title: 'Red Dead Redemption 2',
+    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
+    platform: 'PS4',
   },
   {
-    title: "DOOM",
-    bgImage: "https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg",
-    platform: "PS4",
+    title: 'DOOM',
+    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Last of Us 2",
-    bgImage: "https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg",
-    platform: "PS4",
+    title: 'Last of Us 2',
+    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Red Dead Redemption 2",
-    bgImage: "https://media.s-bol.com/7366kVl26WXr/550x685.jpg",
-    platform: "PS4",
+    title: 'Red Dead Redemption 2',
+    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
+    platform: 'PS4',
   },
   {
-    title: "DOOM",
-    bgImage: "https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg",
-    platform: "PS4",
+    title: 'DOOM',
+    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Last of Us 2",
-    bgImage: "https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg",
-    platform: "PS4",
+    title: 'Last of Us 2',
+    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Red Dead Redemption 2",
-    bgImage: "https://media.s-bol.com/7366kVl26WXr/550x685.jpg",
-    platform: "PS4",
+    title: 'Red Dead Redemption 2',
+    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
+    platform: 'PS4',
   },
   {
-    title: "DOOM",
-    bgImage: "https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg",
-    platform: "PS4",
+    title: 'DOOM',
+    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Last of Us 2",
-    bgImage: "https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg",
-    platform: "PS4",
+    title: 'Last of Us 2',
+    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Red Dead Redemption 2",
-    bgImage: "https://media.s-bol.com/7366kVl26WXr/550x685.jpg",
-    platform: "PS4",
+    title: 'Red Dead Redemption 2',
+    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
+    platform: 'PS4',
   },
   {
-    title: "DOOM",
-    bgImage: "https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg",
-    platform: "PS4",
+    title: 'DOOM',
+    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Last of Us 2",
-    bgImage: "https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg",
-    platform: "PS4",
+    title: 'Last of Us 2',
+    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
+    platform: 'PS4',
   },
   {
-    title: "Red Dead Redemption 2",
-    bgImage: "https://media.s-bol.com/7366kVl26WXr/550x685.jpg",
-    platform: "PS4",
+    title: 'Red Dead Redemption 2',
+    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
+    platform: 'PS4',
   },
   {
-    title: "DOOM",
-    bgImage: "https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg",
-    platform: "PS4",
+    title: 'DOOM',
+    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
+    platform: 'PS4',
   },
-];
+]
 
 import {
   IonContent,
@@ -120,16 +120,16 @@ import {
   IonToolbar,
   IonTitle,
   IonIcon,
-} from "@ionic/vue";
+} from '@ionic/vue'
 
-import GameCard from "@/components/GameCard";
-import GsInput from "@/components/Input";
+import GameCard from '@/components/GameCard.vue'
+import GsInput from '@/components/Input.vue'
 
-import { defineComponent, ref } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: "CreateGameModal",
+  name: 'CreateGameModal',
   components: {
     IonContent,
     IonPage,
@@ -141,14 +141,14 @@ export default defineComponent({
     IonIcon,
   },
   setup() {
-    const gamesList = ref(games);
-    const router = useRouter();
+    const gamesList = ref(games)
+    const router = useRouter()
     return {
       gamesList,
       router,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="scss">

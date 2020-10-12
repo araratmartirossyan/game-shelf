@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: "JsInputText",
+  name: 'GsInputText',
   inheritAttrs: false,
   props: {
     dirname: {
@@ -42,7 +42,7 @@ export default {
     },
     name: {
       type: String,
-      default: "",
+      default: '',
     },
     maxlength: {
       type: [Number, String],
@@ -54,7 +54,7 @@ export default {
     },
     type: {
       type: String,
-      default: "text",
+      default: 'text',
     },
     valid: {
       type: [Boolean, null],
@@ -62,7 +62,7 @@ export default {
     },
     value: {
       type: [String, Number],
-      default: "",
+      default: '',
     },
     prefix: {
       type: String,
@@ -111,13 +111,13 @@ export default {
   },
   data: () => ({
     hasFocus: false,
-    internalValue: "",
+    internalValue: '',
   }),
   computed: {
-    isValid: (vm) => vm.valid === true,
-    isInvalid: (vm) => vm.valid === false,
+    isValid: vm => vm.valid === true,
+    isInvalid: vm => vm.valid === false,
   },
-};
+}
 </script>
 
 <style scoped>

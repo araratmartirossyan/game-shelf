@@ -13,30 +13,24 @@
 </template>
 
 <script lang="ts">
-interface GameCardProps {
-  title: string;
-  bgImage: string;
-  platform: string;
-}
-
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 export default defineComponent({
-  name: "GameCard",
+  name: 'GameCard',
   props: {
     title: {
       type: String,
-      default: "",
+      default: '',
     },
     bgImage: {
       type: String,
-      default: "",
+      default: '',
     },
     platform: {
       type: String,
-      default: "",
+      default: '',
     },
   },
-});
+})
 </script>
 
 <style lang="scss" scoped>
@@ -84,7 +78,7 @@ $ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
     justify-content: center;
     align-items: center;
     &:after {
-      content: "";
+      content: '';
       width: 100%;
       height: 50%;
       display: block;
