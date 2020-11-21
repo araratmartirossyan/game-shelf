@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "game-shelf",
+  "appName": "bshelf",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",

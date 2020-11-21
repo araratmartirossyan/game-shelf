@@ -1,0 +1,8 @@
+mutation deleteGame($game: ID!) {
+  deleteGame(input: { where: { id: $game } }) {
+    game {
+      title
+      id
+    }
+  }
+}

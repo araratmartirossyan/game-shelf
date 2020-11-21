@@ -1,0 +1,6 @@
+query Platforms {
+  platforms(limit: 500) {
+    title
+    id
+  }
+}

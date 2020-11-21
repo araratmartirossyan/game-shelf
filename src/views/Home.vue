@@ -4,115 +4,51 @@
       <ion-toolbar>
         <ion-title>Game List</ion-title>
         <ion-icon
+          @click="router.push('/create')"
           slot="end"
           name="ios-add"
-          @click="router.push('/create')"
           size="large"
         />
       </ion-toolbar>
     </ion-header>
-    <ion-content
-      :fullscreen="true"
-      class="ion-padding game-list__content"
-      color="gray"
-    >
-      <div class="game-list__toolbar">
-        <GsInput placeholder="Search" />
+    <ion-content class="ion-padding game-list__content" color="gray">
+      <div class="content">
+        <GsInput
+          placeholder="Search game"
+          name="search"
+          v-model:search="searchQuery"
+        />
+
+        <IonLoading
+          v-if="loading"
+          message="Please wait..."
+          :is-open="loading"
+        />
+
+        <ul class="game-list" v-else>
+          <li v-for="({ title, picture, id }, key) in foundGames" :key="key">
+            <router-link :to="{ name: 'game-overview', params: { id } }">
+              <GameCard
+                :title="title"
+                :bgImage="picture?.formats?.thumbnail?.url"
+              />
+            </router-link>
+          </li>
+        </ul>
       </div>
-      <ul class="game-list">
-        <li v-for="(game, key) in gamesList" :key="key">
-          <game-card :title="game.title" :bgImage="game.bgImage" />
-        </li>
-      </ul>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { addCircle } from 'ionicons/icons'
-import { addIcons } from 'ionicons'
+import { defineComponent, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useQuery } from '@vue/apollo-composable';
 
-addIcons({
-  'ios-add': addCircle,
-})
-const games = [
-  {
-    title: 'Last of Us 2',
-    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Red Dead Redemption 2',
-    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'DOOM',
-    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Last of Us 2',
-    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Red Dead Redemption 2',
-    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'DOOM',
-    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Last of Us 2',
-    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Red Dead Redemption 2',
-    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'DOOM',
-    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Last of Us 2',
-    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Red Dead Redemption 2',
-    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'DOOM',
-    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Last of Us 2',
-    bgImage: 'https://media.s-bol.com/mOKjqDVlmqkO/550x694.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'Red Dead Redemption 2',
-    bgImage: 'https://media.s-bol.com/7366kVl26WXr/550x685.jpg',
-    platform: 'PS4',
-  },
-  {
-    title: 'DOOM',
-    bgImage: 'https://media.s-bol.com/NZ185Z5w3qz/550x686.jpg',
-    platform: 'PS4',
-  },
-]
+// graphQl
+import gamesQuery from '@/graph/queries/games.query.graphql';
 
+// components
 import {
   IonContent,
   IonPage,
@@ -120,13 +56,15 @@ import {
   IonToolbar,
   IonTitle,
   IonIcon,
-} from '@ionic/vue'
+  loadingController,
+  IonLoading,
+} from '@ionic/vue';
 
-import GameCard from '@/components/GameCard.vue'
-import GsInput from '@/components/Input.vue'
+import GameCard from '@/components/GameCard.vue';
+import GsInput from '@/components/Input.vue';
 
-import { defineComponent, ref } from 'vue'
-import { useRouter } from 'vue-router'
+// hooks
+import { useSearch } from '@/hooks/device/fuse.hook';
 
 export default defineComponent({
   name: 'CreateGameModal',
@@ -137,21 +75,41 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     GameCard,
-    GsInput,
     IonIcon,
+    IonLoading,
+    GsInput,
   },
   setup() {
-    const gamesList = ref(games)
-    const router = useRouter()
+    const router = useRouter();
+    const searchQuery = ref('');
+    const { result, loading, error } = useQuery(gamesQuery);
+
+    const foundGames = computed(() => {
+      const { search } = useSearch(result.value.games);
+      return searchQuery.value
+        ? search(searchQuery.value).map(({ item }) => item)
+        : result.value.games;
+    });
+
     return {
-      gamesList,
+      loading,
+      error,
       router,
-    }
+      searchQuery,
+      foundGames,
+      result,
+    };
   },
-})
+});
 </script>
 
 <style lang="scss">
+.game-list {
+  li {
+    width: 100px;
+    height: 100px;
+  }
+}
 $base-gap: 15px;
 $list-gap: 1.5 * $base-gap;
 $item-size-width: calc(50vw - $list-gap);

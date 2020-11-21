@@ -1,0 +1,15 @@
+query MyGames {
+  games {
+    title
+    description
+    id
+    createdAt
+    updatedAt
+    __typename
+    picture {
+      size
+      url
+      formats
+    }
+  }
+}

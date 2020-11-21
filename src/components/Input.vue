@@ -14,7 +14,6 @@
 
     <input
       ref="input"
-      v-model="internalValue"
       :disabled="disabled"
       class="gs-input-text__field"
       :class="{
@@ -24,6 +23,7 @@
       }"
       :autofocus="autofocus"
       :placeholder="placeholder"
+      :value="value"
       @input="$emit(`update:${name}`, $event.target.value)"
       @focus="hasFocus = true"
       @blur="hasFocus = false"
@@ -31,8 +31,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: 'GsInputText',
   inheritAttrs: false,
   props: {
@@ -57,7 +59,7 @@ export default {
       default: 'text',
     },
     valid: {
-      type: [Boolean, null],
+      type: Boolean,
       default: null,
     },
     value: {
@@ -114,10 +116,10 @@ export default {
     internalValue: '',
   }),
   computed: {
-    isValid: vm => vm.valid === true,
-    isInvalid: vm => vm.valid === false,
+    isValid: (vm: { valid: boolean }) => vm.valid === true,
+    isInvalid: (vm: { valid: boolean }) => vm.valid === false,
   },
-}
+});
 </script>
 
 <style scoped>
@@ -125,6 +127,7 @@ export default {
   width: 100%;
   border-radius: 6px;
   background: #fff;
+  color: black;
   border: none;
   height: 60px;
   font-size: 16px;

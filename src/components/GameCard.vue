@@ -2,7 +2,8 @@
   <div class="game-card">
     <div class="game-card__content">
       <div class="game-card__image">
-        <img :src="bgImage" />
+        <img v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
+        <img v-else :src="defaultImage" />
       </div>
 
       <div class="game-card__bottom">
@@ -13,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 export default defineComponent({
   name: 'GameCard',
   props: {
@@ -30,7 +31,12 @@ export default defineComponent({
       default: '',
     },
   },
-})
+  computed: {
+    baseUrl: () => process.env.VUE_APP_API_URL,
+    defaultImage: () =>
+      'https://cdn.dribbble.com/users/947358/screenshots/14482318/media/909a16c4339896f8e21eb3d3473cb46f.png',
+  },
+});
 </script>
 
 <style lang="scss" scoped>
