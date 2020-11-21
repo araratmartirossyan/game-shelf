@@ -55,13 +55,11 @@
           You can either select a photo from your gallery or take one now.
         </p>
         <ion-button @click="takePhoto">Make a picture</ion-button>
-        <ion-img :src="image?.photo?.webviewPath" />
+        <ion-img alt="game-poster" :src="image?.photo?.webviewPath" />
       </gs-label>
     </ion-content>
     <ion-footer class="footer-form">
-      <ion-button expand="full" @click="submitForm">
-        Create game
-      </ion-button>
+      <ion-button expand="full" @click="submitForm"> Create game </ion-button>
     </ion-footer>
   </ion-page>
 </template>
@@ -159,7 +157,7 @@ export default defineComponent({
       await loading.present();
       const { genres, title, platform, description } = gameForm.value;
       const prepareForm = {
-        genres: genres.map(i => i.value),
+        genres: genres.map((i) => i.value),
         title,
         platform: platform.value,
         description,

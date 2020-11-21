@@ -2,8 +2,8 @@
   <div class="game-card">
     <div class="game-card__content">
       <div class="game-card__image">
-        <img v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
-        <img v-else src="@/assets/empty.png" />
+        <img alt="game-poster" v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
+        <img alt="game-poster" v-else src="@/assets/empty.png" />
       </div>
 
       <div class="game-card__bottom">
