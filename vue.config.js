@@ -1,4 +1,7 @@
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/game-shelf/'
+    : '/',
   chainWebpack: config => {
     // GraphQL Loader
     config.module
