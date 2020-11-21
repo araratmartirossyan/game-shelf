@@ -52,5 +52,5 @@
     "vue-jest": "^5.0.0-0",
     "webpack-graphql-loader": "^1.0.2"
   },
-  "description": "An Ionic project"
+  "description": "Game Shelf"
 }
