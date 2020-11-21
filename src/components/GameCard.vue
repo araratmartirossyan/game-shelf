@@ -3,7 +3,7 @@
     <div class="game-card__content">
       <div class="game-card__image">
         <img v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
-        <img v-else :src="defaultImage" />
+        <img v-else src="@/assets/empty.png" />
       </div>
 
       <div class="game-card__bottom">
@@ -33,8 +33,6 @@ export default defineComponent({
   },
   computed: {
     baseUrl: () => process.env.VUE_APP_API_URL,
-    defaultImage: () =>
-      'https://cdn.dribbble.com/users/947358/screenshots/14482318/media/909a16c4339896f8e21eb3d3473cb46f.png',
   },
 });
 </script>

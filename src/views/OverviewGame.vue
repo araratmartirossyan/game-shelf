@@ -22,7 +22,18 @@
         </ion-toolbar>
       </ion-header> -->
       <!-- <ion-img :src="item.src"></ion-img> -->
-      <img class="game-container__poster" v-if="gameImage" :src="gameImage" />
+      <img
+        alt="game-poster"
+        class="game-container__poster"
+        v-if="gameImage"
+        :src="gameImage"
+      />
+      <img
+        alt="game-poster"
+        class="game-container__poster"
+        v-else
+        src="@/assets/empty.png"
+      />
 
       <div class="game-container" v-if="game">
         <div class="game-container__info">
@@ -151,10 +162,8 @@ export default defineComponent({
   },
   computed: {
     baseUrl: () => process.env.VUE_APP_API_URL,
-    defaultImage: () =>
-      'https://cdn.dribbble.com/users/947358/screenshots/14482318/media/909a16c4339896f8e21eb3d3473cb46f.png',
-    gameImage: ({ game, defaultImage, baseUrl }) =>
-      game.picture ? `${baseUrl}${game.picture?.url}` : defaultImage,
+    gameImage: ({ game, baseUrl }) =>
+      game.picture ? `${baseUrl}${game.picture?.url}` : null,
   },
 });
 </script>
