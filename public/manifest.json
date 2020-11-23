@@ -2,7 +2,7 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "display": "standalone",
-  "scope": "/",
+  "scope": "/game-shelf",
   "start_url": ".",
   "app_name": "Game Shelf",
   "short_name": "g-shelf",
