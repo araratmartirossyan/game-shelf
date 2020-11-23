@@ -76,13 +76,11 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonCard,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
   IonIcon,
-  IonItem,
   IonLabel,
   IonChip,
   IonButtons,
@@ -117,10 +115,9 @@ export default defineComponent({
   },
   setup() {
     const { currentRoute, back } = useRouter();
-    const { refetch } = gamesHook();
     const gameId = currentRoute.value.params.id;
 
-    const { result, loading, error } = useQuery(gameQuery, {
+    const { result } = useQuery(gameQuery, {
       id: gameId,
     });
 

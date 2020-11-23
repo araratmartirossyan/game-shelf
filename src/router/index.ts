@@ -25,9 +25,8 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  scrollBehavior(from, to, savedPosition) {
+  scrollBehavior() {
     const position = sessionStorage.getItem('top')
-    console.log(position)
     if (position) {
       console.log('return position')
       return {

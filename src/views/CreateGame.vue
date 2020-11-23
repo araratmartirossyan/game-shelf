@@ -65,11 +65,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref, toRef, watch } from 'vue';
+import { defineComponent, onMounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
-
-// graphql
-import gamesQuery from '@/graph/queries/games.query.graphql';
 
 // hooks
 import genresHook from '@/hooks/api/fetchGenres.hook';
@@ -89,8 +86,6 @@ import {
   IonButton,
   IonImg,
   IonFooter,
-  IonSelect,
-  IonSelectOption,
   IonTextarea,
   loadingController,
 } from '@ionic/vue';
@@ -99,7 +94,6 @@ import GsLabel from '@/components/Label.vue';
 
 // types
 import { GameForm } from '@/types/games-shelf';
-import { useQuery } from '@vue/apollo-composable';
 import { fetchGame } from '@/services/search.service';
 
 const defaultForm: GameForm = {
@@ -123,8 +117,7 @@ export default defineComponent({
     const { genres } = genresHook();
     const { platforms } = platformsHook();
     const { takePhoto, image } = usePhotoGallery();
-    const { refetch } = gamesHook();
-    const { currentRoute, back, replace } = useRouter();
+    const { currentRoute, replace } = useRouter();
 
     const gameForm = ref<GameForm>(defaultForm);
 

@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, nextTick } from 'vue';
-import debounce from '@/utils/debounce';
+import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   name: 'GsPage',

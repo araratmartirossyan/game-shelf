@@ -49,16 +49,7 @@ import { useQuery } from '@vue/apollo-composable';
 import gamesQuery from '@/graph/queries/games.query.graphql';
 
 // components
-import {
-  IonContent,
-  IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonIcon,
-  loadingController,
-  IonLoading,
-} from '@ionic/vue';
+import { IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
 import GsPage from '@/components/Page.vue';
 
 import GameCard from '@/components/GameCard.vue';
@@ -70,14 +61,10 @@ import { useSearch } from '@/hooks/device/fuse.hook';
 export default defineComponent({
   name: 'CreateGameModal',
   components: {
-    IonContent,
-    IonPage,
-    IonHeader,
     IonToolbar,
     IonTitle,
     GameCard,
     IonIcon,
-    IonLoading,
     GsInput,
     GsPage,
   },

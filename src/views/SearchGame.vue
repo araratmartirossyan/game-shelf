@@ -31,10 +31,9 @@ import {
   IonHeader,
   IonTitle,
 } from '@ionic/vue';
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import { findGame } from '@/services/search.service';
-import { useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
