@@ -1,6 +1,6 @@
 <template>
-  <ion-page>
-    <ion-header>
+  <gs-page>
+    <template #top>
       <ion-toolbar>
         <ion-title>Game List</ion-title>
         <ion-icon
@@ -10,8 +10,8 @@
           size="large"
         />
       </ion-toolbar>
-    </ion-header>
-    <ion-content class="ion-padding game-list__content" color="gray">
+    </template>
+    <div class="ion-padding game-list__content" color="gray">
       <div class="content">
         <GsInput
           placeholder="Search game"
@@ -19,13 +19,13 @@
           v-model:search="searchQuery"
         />
 
-        <IonLoading
+        <!-- <IonLoading
           v-if="loading"
           message="Please wait..."
           :is-open="loading"
-        />
+        /> -->
 
-        <ul class="game-list" v-else>
+        <ul class="game-list" v-if="!loading">
           <li v-for="({ title, picture, id }, key) in foundGames" :key="key">
             <router-link :to="{ name: 'game-overview', params: { id } }">
               <GameCard
@@ -36,8 +36,8 @@
           </li>
         </ul>
       </div>
-    </ion-content>
-  </ion-page>
+    </div>
+  </gs-page>
 </template>
 
 <script lang="ts">
@@ -59,6 +59,7 @@ import {
   loadingController,
   IonLoading,
 } from '@ionic/vue';
+import GsPage from '@/components/Page.vue';
 
 import GameCard from '@/components/GameCard.vue';
 import GsInput from '@/components/Input.vue';
@@ -78,6 +79,7 @@ export default defineComponent({
     IonIcon,
     IonLoading,
     GsInput,
+    GsPage,
   },
   setup() {
     const router = useRouter();

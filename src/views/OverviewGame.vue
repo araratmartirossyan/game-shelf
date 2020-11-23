@@ -145,7 +145,7 @@ export default defineComponent({
             handler: async () => {
               await mutate({ game: gameId });
 
-              await refetch();
+              // await refetch();
               back();
             },
           },

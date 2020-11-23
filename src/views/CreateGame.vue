@@ -170,7 +170,7 @@ export default defineComponent({
 
       loading.dismiss();
       replace({ name: 'home' });
-      await refetch();
+      // await refetch();
     };
 
     return {

@@ -1,11 +1,11 @@
 // import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
+import { RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/Home.vue')
+    component: () => import('@/views/Home.vue'),
   },
   {
     path: '/create',
@@ -25,8 +25,22 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  scrollBehavior(from, to, savedPosition) {
+    const position = sessionStorage.getItem('top')
+    console.log(position)
+    if (position) {
+      console.log('return position')
+      return {
+        left: 0,
+        top: Number(position)
+      }
+    }
+
+    return { left: 0, top: 0 }
+  },
+  history: createWebHashHistory(process.env.BASE_URL),
   routes,
+
 })
 
 export default router

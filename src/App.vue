@@ -1,6 +1,8 @@
 <template>
   <ion-app>
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <component :is="Component" />
+    </router-view>
   </ion-app>
 </template>
 
