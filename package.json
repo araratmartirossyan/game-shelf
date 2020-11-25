@@ -26,15 +26,18 @@
     "fuse.js": "^6.4.2",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
+    "register-service-worker": "^1.7.1",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
+    "swiper": "^6.3.5",
     "vue": "^3.0.0-0",
+    "vue-awesome-swiper": "^4.1.1",
     "vue-router": "^4.0.0-0",
-    "vue-select": "https://github.com/wolfjagger/vue-select.git"
+    "vue-select": "https://github.com/wolfjagger/vue-select.git",
+    "vue3-carousel": "^0.1.4"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.2",
-    "execa": "latest",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
@@ -50,6 +53,7 @@
     "@vue/test-utils": "^2.0.0-0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0-0",
+    "execa": "latest",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
     "webpack-graphql-loader": "^1.0.2"

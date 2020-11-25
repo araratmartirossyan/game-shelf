@@ -3,8 +3,10 @@
     <div class="gs-page__top">
       <slot name="top" />
     </div>
+    <slot />
+
     <div ref="pageContent" class="gs-page__content" @scroll="scrollHandler">
-      <slot />
+      <slot name="content" />
     </div>
     <div class="gs-page__bottom">
       <slot name="bottom" />
@@ -25,7 +27,6 @@ export default defineComponent({
 
     onMounted(() => {
       const position = sessionStorage.getItem('top');
-      console.log('CALL THIS');
       pageContent.value.scrollTo(0, position);
     });
 
@@ -39,8 +40,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '@/theme/global.scss';
+
 .gs-page {
   bottom: 0;
+  background: #f2f5f7;
   display: flex;
   flex-direction: column;
   left: 0;
@@ -48,6 +52,7 @@ export default defineComponent({
   position: absolute;
   right: 0;
   top: 0;
+  overflow: auto;
 
   &__top,
   &__bottom {

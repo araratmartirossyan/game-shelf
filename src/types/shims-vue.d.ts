@@ -12,3 +12,5 @@ declare module '*.graphql' {
 }
 
 declare module 'vue-select'
+
+declare module 'swiper/vue'

@@ -1,19 +1,19 @@
 <template>
-  <ion-app>
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
-  </ion-app>
+  <router-view v-slot="{ Component }" :key="$route.fullPath">
+    <component :is="Component" />
+  </router-view>
 </template>
 
 <script lang="ts">
-import { IonApp } from '@ionic/vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'App',
-  components: {
-    IonApp,
-  },
 });
 </script>
+
+<style lang="scss" scoped>
+body {
+  background: white;
+}
+</style>

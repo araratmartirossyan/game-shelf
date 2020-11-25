@@ -3,6 +3,12 @@ query MyGames {
     title
     description
     id
+    genres {
+      title
+    }
+    platform {
+      title
+    }
     createdAt
     updatedAt
     __typename

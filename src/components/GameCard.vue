@@ -1,15 +1,13 @@
 <template>
   <div class="game-card">
-    <div class="game-card__content">
-      <div class="game-card__image">
-        <img alt="game-poster" v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
-        <img alt="game-poster" v-else src="@/assets/empty.png" />
-      </div>
+    <!-- <div class="game-card__content"> -->
+    <img alt="game-poster" v-if="bgImage" :src="`${baseUrl}${bgImage}`" />
+    <img alt="game-poster" v-else src="@/assets/empty.png" />
 
-      <div class="game-card__bottom">
+    <!-- <div class="game-card__bottom">
         {{ title }}
-      </div>
-    </div>
+      </div> -->
+    <!-- </div> -->
   </div>
 </template>
 
@@ -38,83 +36,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$base-gap: 15px;
-$base-speed: 150ms;
-$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-$ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
-
-.game-card {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08),
-    0 1px 3px 1px rgba(66, 66, 66, 0.16);
-  border-radius: 6px;
-
-  transform-origin: center;
-  transition: transform 50ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition: transform 50ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    -webkit-transform 50ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  transition: transform 50ms $ease-out-back;
-  transition: transform 50ms $ease-out-back,
-    -webkit-transform 50ms $ease-out-back;
-
-  &__content {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-    border-radius: 6px;
-    overflow: hidden;
-    z-index: 2;
-  }
-
-  &__image {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &:after {
-      content: '';
-      width: 100%;
-      height: 50%;
-      display: block;
-      position: absolute;
-      z-index: 1;
-      bottom: 0;
-      left: 0;
-      background: -webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-        from(transparent),
-        to(rgba(0, 0, 0, 0.1))
-      );
-      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.1));
-    }
-
-    img {
-      object-fit: cover;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-    }
-  }
-
-  &__bottom {
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0));
-    position: absolute;
-    bottom: 0;
-    padding: calc(15px / 1.5);
-    color: #fff;
-    width: 100%;
-  }
+.game-card img {
+  width: 150px;
+  height: 150px;
+  border-radius: 38px;
+  object-fit: cover;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 </style>
