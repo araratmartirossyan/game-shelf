@@ -1,51 +1,69 @@
 <template>
   <gs-page>
     <template #top>
-      <div class="game-list__header">
-        <div class="left">
-          <img class="logo" src="@/assets/logo.svg" />
-          <h2 class="heading">Game Shelf</h2>
-        </div>
-        <div class="right">
-          <gs-button icon-name="loupe" />
+      <div class="page-head__left">
+        <img class="logo" src="@/assets/logo.svg" />
+        <gs-heading type="h3" class="page-heading">
+          Game Shelf
+        </gs-heading>
+      </div>
+      <div class="page-head__right">
+        <gs-icon
+          color="black"
+          icon="gs-add"
+          size="36"
+          @click="$router.push({ name: 'search-game' })"
+        />
+        <gs-button icon-name="loupe" />
+      </div>
+    </template>
+    <template #content>
+      <div class="heading">
+        <gs-heading type="h3">
+          Recent
+        </gs-heading>
+      </div>
+      <div class="game-list__content--paddingless">
+        <GsCarousel>
+          <div
+            v-for="(cat, key) in categories"
+            class="category-card"
+            :key="`cat-${key}`"
+          >
+            {{ cat }}
+          </div>
+        </GsCarousel>
+      </div>
+      <div class="game-list__content--paddingless">
+        <swiper v-if="!loading" :slides-per-view="1.5" :space-between="80">
+          <swiper-slide
+            zoom
+            v-for="{ title, picture, id, genres, platform } in foundGames"
+            :key="id"
+          >
+            <SlideCard
+              :title="title"
+              :bgImage="picture?.formats?.medium?.url"
+              :genres="genres"
+              :platform="platform.title"
+              @click="$router.push({ name: 'game-overview', params: { id } })"
+            />
+          </swiper-slide>
+        </swiper>
+      </div>
+      <div class="game-list__content">
+        <div class="games-list" v-if="!loading">
+          <GameCard
+            v-for="({ title, picture, id }, key) in foundGames"
+            :key="key"
+            :title="title"
+            :bgImage="picture?.formats?.medium?.url"
+            @click="$router.push({ name: 'game-overview', params: { id } })"
+            class="games-list__item"
+          />
         </div>
       </div>
     </template>
-    <div class="heading">
-      <gs-heading type="h3">
-        Recent
-      </gs-heading>
-    </div>
-    <div class="game-list__content--paddingless">
-      <swiper v-if="!loading" :slides-per-view="1.5" :space-between="80">
-        <swiper-slide
-          zoom
-          v-for="{ title, picture, id, genres, platform } in foundGames"
-          :key="id"
-        >
-          <SlideCard
-            :title="title"
-            :bgImage="picture?.formats?.medium?.url"
-            :genres="genres"
-            :platform="platform.title"
-          />
-        </swiper-slide>
-      </swiper>
-    </div>
-    <div class="game-list__content">
-      <div class="games-list" v-if="!loading">
-        <!-- <router-link :to="{ name: 'game-overview', params: { id } }"> -->
-        <GameCard
-          :title="title"
-          class="games-list__item"
-          v-for="({ title, picture, id }, key) in foundGames"
-          @click="$router.push({ name: 'game-overview', params: { id } })"
-          :key="key"
-          :bgImage="picture?.formats?.medium?.url"
-        />
-        <!-- </router-link> -->
-      </div>
-    </div>
   </gs-page>
 </template>
 
@@ -64,9 +82,11 @@ import gamesQuery from '@/graph/queries/games.query.graphql';
 import GsPage from '@/components/Page.vue';
 import GsInput from '@/components/Input.vue';
 import GsHeading from '@/components/GsHeading.vue';
+import GsIcon from '@/components/Icons/GsIcon.vue';
 import GsButton from '@/components/Button.vue';
 import GameCard from '@/components/GameCard.vue';
 import SlideCard from '@/components/GameCardBig.vue';
+import GsCarousel from '@/components/GsCarousel.vue';
 
 // hooks
 import { useSearch } from '@/hooks/device/fuse.hook';
@@ -78,20 +98,17 @@ export default defineComponent({
     GameCard,
     SlideCard,
     GsButton,
-    // GsInput,
     GsPage,
     GsHeading,
+    GsIcon,
     Swiper,
     SwiperSlide,
+    GsCarousel,
   },
   setup() {
     const router = useRouter();
     const searchQuery = ref('');
     const { result, loading, error } = useQuery(gamesQuery);
-
-    const onMove = () => {
-      console.log('moved');
-    };
 
     const foundGames = computed(() => {
       const { search } = useSearch(result.value.games);
@@ -107,7 +124,7 @@ export default defineComponent({
       searchQuery,
       foundGames,
       result,
-      onMove,
+      categories: [1, 2, 3, 4, 5, 6],
     };
   },
 });
@@ -115,36 +132,52 @@ export default defineComponent({
 
 <style lang="scss">
 @import '@/theme/global.scss';
+
+.category-card {
+  width: 100px;
+  width: 100px;
+  margin-right: 12px;
+  border-radius: 32px;
+  height: 40px;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid;
+}
+
 .heading {
   margin-top: 0;
   margin-bottom: 0;
+  margin-left: $base-padding;
 }
+
+.page-heading {
+  margin: 0;
+}
+
+.page-head {
+  &__left {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  &__right {
+    display: flex;
+
+    width: 30%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+}
+
 .logo {
   width: 50px;
   margin-right: 10px;
 }
+
 .game-list {
-  h2 {
-    color: black;
-    margin-top: 0;
-  }
-
-  &__header {
-    display: flex;
-    padding: $base-gap;
-    margin-left: 20px;
-    align-items: center;
-    justify-content: space-between;
-
-    .left {
-      display: flex;
-      align-items: center;
-    }
-
-    .right {
-      margin-right: 10px;
-    }
-  }
   &__content {
     &--paddingless {
       max-height: 480px;
@@ -161,9 +194,11 @@ export default defineComponent({
 .swiper-slide-active {
   .game-card {
     margin-top: 45px;
+    will-change: transform;
     &__main {
       transform: scaleY(1.15);
-      transition: transform 230ms ease-in-out;
+      transition: transform 430ms;
+      will-change: transform;
     }
   }
 
@@ -171,10 +206,6 @@ export default defineComponent({
     margin-top: 45px;
     transition: margin 0.25s;
   }
-}
-
-.heading {
-  margin-left: $base-padding;
 }
 
 .games-list {

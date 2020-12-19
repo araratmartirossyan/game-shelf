@@ -1,24 +1,11 @@
-// import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/components/TabsPage.vue'),
-    children: [
-      {
-        path: 'overview',
-        name: 'overview',
-        component: () => import('@/views/Home.vue'),
-      }
-    ]
+    component: () => import('@/views/Home.vue'),
   },
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   component: () => import('@/views/Home.vue'),
-  // },
   {
     path: '/create',
     name: 'search-game',
@@ -40,7 +27,6 @@ const router = createRouter({
   scrollBehavior() {
     const position = sessionStorage.getItem('top')
     if (position) {
-      console.log('return position')
       return {
         left: 0,
         top: Number(position)

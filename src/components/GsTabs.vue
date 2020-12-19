@@ -28,9 +28,8 @@ export default {
   position: absolute;
   right: 0;
   top: 0;
-  border-top-right-radius: 16px;
-  border-top-left-radius: 16px;
 
+  background: none;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 
   .outlet {
@@ -42,8 +41,6 @@ export default {
     flex-shrink: 0;
     background: #fff;
     height: 60px;
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
   }
 
   .fc-page {

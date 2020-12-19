@@ -1,31 +1,14 @@
 <template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
-        </ion-buttons>
-        <ion-title>{{ game ? game.title : 'Loading...' }}</ion-title>
-        <ion-icon
-          slot="end"
-          name="ios-remove"
-          @click="handleRemoveGame"
-          size="large"
-        />
-      </ion-toolbar>
-    </ion-header>
+  <gs-page v-if="game" paddingless>
+    <template #top>
+      <gs-icon icon="arrow-left" size="32" @click="$router.back()" />
+    </template>
 
-    <ion-content :fullscreen="true" v-if="game">
-      <!-- <ion-header collapse="condense">
-        <ion-toolbar>
-          <h2>{{ game.game.title }}</ion-title>
-        </ion-toolbar>
-      </ion-header> -->
-      <!-- <ion-img :src="item.src"></ion-img> -->
+    <template #content>
       <img
         alt="game-poster"
         class="game-container__poster"
-        v-if="gameImage"
+        v-if="game && gameImage"
         :src="gameImage"
       />
       <img
@@ -35,47 +18,40 @@
         src="@/assets/empty.png"
       />
 
-      <div class="game-container" v-if="game">
-        <div class="game-container__info">
-          <ion-card-header>
-            <ion-card-subtitle>Game title</ion-card-subtitle>
-            <ion-card-title>{{ game.title }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-header>
-            <ion-card-subtitle>Platform</ion-card-subtitle>
-            <ion-card-title>{{ game.platform.title }}</ion-card-title>
-          </ion-card-header>
-          <ion-card-header>
-            <ion-chip
-              outline
-              color="primary"
-              v-for="(genre, key) in game.genres"
-              :key="key"
-            >
-              <ion-label> {{ genre.title }} </ion-label>
-            </ion-chip>
-          </ion-card-header>
-          <ion-card-content>
-            {{ game.description }}
-          </ion-card-content>
-        </div>
-      </div>
-    </ion-content>
-  </ion-page>
+      <gs-bottom-sheet>
+        <ion-card-header>
+          <ion-card-subtitle>Game title</ion-card-subtitle>
+          <ion-card-title>{{ game.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-header>
+          <ion-card-subtitle>Platform</ion-card-subtitle>
+          <ion-card-title>{{ game.platform.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-header>
+          <ion-chip
+            outline
+            color="primary"
+            v-for="(genre, key) in game.genres"
+            :key="key"
+          >
+            <ion-label> {{ genre.title }} </ion-label>
+          </ion-chip>
+        </ion-card-header>
+        <ion-card-content style="color: black;">
+          {{ game.description }}
+        </ion-card-content>
+      </gs-bottom-sheet>
+    </template>
+  </gs-page>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref, watch, onMounted } from 'vue';
 import { useQuery, useMutation } from '@vue/apollo-composable';
 import { useRouter } from 'vue-router';
 
 // components
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
@@ -83,10 +59,11 @@ import {
   IonIcon,
   IonLabel,
   IonChip,
-  IonButtons,
-  IonBackButton,
   alertController,
 } from '@ionic/vue';
+import GsPage from '@/components/Page.vue';
+import GsIcon from '@/components/Icons/GsIcon.vue';
+import GsBottomSheet from '@/components/GsBottomSheet.vue';
 
 // hooks
 import { gamesHook } from '@/hooks/api/fetchGames.hook';
@@ -98,20 +75,15 @@ import removeGameMutation from '@/graph/mutations/deleteGame.mutation.graphql';
 export default defineComponent({
   name: 'Home',
   components: {
-    IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
-    IonToolbar,
     IonCardContent,
     IonCardSubtitle,
     IonCardTitle,
     IonCardHeader,
     IonChip,
     IonLabel,
-    IonIcon,
-    IonButtons,
-    IonBackButton,
+    GsIcon,
+    GsBottomSheet,
+    GsPage,
   },
   setup() {
     const { currentRoute, back } = useRouter();
@@ -142,7 +114,6 @@ export default defineComponent({
             handler: async () => {
               await mutate({ game: gameId });
 
-              // await refetch();
               back();
             },
           },
@@ -166,41 +137,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-ion-content {
-  --ion-background-color: #111d12;
-}
-@keyframes animation-actionsheet-intro {
-  0% {
-    -webkit-transform: translateY(100%);
-    transform: translateY(100%);
-  }
-  to {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-.game-container {
-  animation: animation-actionsheet-intro 0.3s cubic-bezier(0.36, 0.66, 0.04, 1);
-  position: relative;
-  padding: 1px;
-  &__title {
-    &--genre {
-      margin-bottom: 5px;
-    }
-  }
-  &__info {
-    width: 100%;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 12px;
-    background: white;
-    margin-top: -40px;
-    z-index: 999;
-    padding: 10px;
-  }
+@import '@/theme/global.scss';
 
-  &__poster {
-    width: 100%;
-    height: 340px;
+.page {
+  &-top {
+    position: fixed;
+    margin-left: $base-padding;
+    margin-top: 15px;
   }
+  &__fixed {
+    overflow: hidden;
+  }
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  left: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  overflow: scroll;
 }
 </style>

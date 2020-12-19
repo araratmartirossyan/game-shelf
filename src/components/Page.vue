@@ -1,11 +1,19 @@
 <template>
-  <div class="gs-page" @scroll="scrollHandler">
+  <div
+    class="gs-page"
+    :style="{ backgroundColor: style[type] }"
+    @scroll="scrollHandler"
+  >
     <div class="gs-page__top">
       <slot name="top" />
     </div>
     <slot />
 
-    <div ref="pageContent" class="gs-page__content" @scroll="scrollHandler">
+    <div
+      ref="pageContent"
+      class="gs-page__content"
+      :class="{ 'gs-page__content--paddingless': paddingless }"
+    >
       <slot name="content" />
     </div>
     <div class="gs-page__bottom">
@@ -19,11 +27,22 @@ import { defineComponent, ref, onMounted } from 'vue';
 
 export default defineComponent({
   name: 'GsPage',
+  props: {
+    type: {
+      type: String,
+      default: 'main',
+    },
+    paddingless: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const pageContent = ref(null);
     const restoreScrollPosition = ref(0);
-    const scrollHandler = ({ target: { scrollTop } }) =>
+    const scrollHandler = ({ target: { scrollTop } }) => {
       sessionStorage.setItem('top', Number(scrollTop));
+    };
 
     onMounted(() => {
       const position = sessionStorage.getItem('top');
@@ -34,6 +53,11 @@ export default defineComponent({
       restoreScrollPosition,
       pageContent,
       scrollHandler,
+
+      style: {
+        white: '#fff',
+        main: '#f2f5f7',
+      },
     };
   },
 });
@@ -44,7 +68,6 @@ export default defineComponent({
 
 .gs-page {
   bottom: 0;
-  background: #f2f5f7;
   display: flex;
   flex-direction: column;
   left: 0;
@@ -54,12 +77,21 @@ export default defineComponent({
   top: 0;
   overflow: auto;
 
+  &__top {
+    position: fixed !important;
+    display: flex;
+    padding: $base-gap $base-gap * 2;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
   &__top,
   &__bottom {
     flex-grow: 0;
     flex-shrink: 0;
     position: relative;
-    z-index: 2;
+    z-index: 5;
   }
 
   &__content {
@@ -67,6 +99,11 @@ export default defineComponent({
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 3;
+    padding-top: $base-gap * 4;
+
+    &--paddingless {
+      padding-top: 0;
+    }
   }
 }
 </style>

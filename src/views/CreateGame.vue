@@ -118,14 +118,16 @@ export default defineComponent({
     const { platforms } = platformsHook();
     const { takePhoto, image } = usePhotoGallery();
     const { currentRoute, replace } = useRouter();
-
     const gameForm = ref<GameForm>(defaultForm);
 
     onMounted(async () => {
       const {
         params: { id },
       } = currentRoute.value;
+      const game = await fetchGame(id);
       data.value = await fetchGame(id);
+
+      console.log(game);
     });
 
     watch(data, () => {
@@ -150,7 +152,7 @@ export default defineComponent({
       await loading.present();
       const { genres, title, platform, description } = gameForm.value;
       const prepareForm = {
-        genres: genres.map((i) => i.value),
+        genres: genres.map(i => i.value),
         title,
         platform: platform.value,
         description,
